@@ -1,0 +1,140 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/a9f103d8b3.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.min.js"
+    integrity="sha384-heAjqF+bCxXpCWLa6Zhcp4fu20XoNIA98ecBC1YkdXhszjoejr5y9Q77hIrv8R9i"
+    crossorigin="anonymous"></script>
+<!-- <link rel="stylesheet" href="/css/home.css" />
+<link rel="stylesheet" href="/css/posts.css"> -->
+<link rel="stylesheet" href="<%= assetPath('css/posts.css') %>">
+<link rel="stylesheet" href="<%= assetPath('css/home.css') %>">
+<link rel="stylesheet" href="<%= assetPath('css/chat_box.css') %>">
+<script src="https://kit.fontawesome.com/a9f103d8b3.js" crossorigin="anonymous"></script>
+<div id="home-container">
+    <section id="feed-posts">
+        <%if(!locals.user) {%>
+            <h4 class="text-center mt-4 mb-5">Hello There! Please Sign in to post </h4>
+            <%}%>
+                <% if(locals.user){ %>
+                    <div class="row flex-column mb-3">
+                        <h1 class="text-center">Create Post</h1>
+                        <div class="col-6 offset-3">
+                            <form action="/posts/create" id="new-post-form" enctype="multipart/form-data" method="POST">
+                                <div class="mb-3">
+                                    <label class="form-label" for="post-text">Content</label>
+                                    <textarea class="form-control" id="post-text" name="content" cols="30" rows="3"
+                                        placeholder="Type Here..." required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="custom-file">
+                                        <input class="form-control" id="post-avatar" class="custom-file-input" type="file" name="avatar"
+                                            placeholder="Post Picture" />
+                                    </div>
+                                </div>
+
+                                <input class="btn btn-info form-control mb-5" type="submit" value="Post" />
+                            </form>
+                        </div>
+                    </div>
+
+                    <% } %>
+
+                        <div id="posts-list-container">
+                            <ul class="list-group list-group-flush">
+                                <% for(post of posts){ %>
+                                    <%- include('_post') -%>
+                                        <%} %>
+                            </ul>
+                        </div>
+    </section>
+
+    
+    <section id="user-friends">
+            <%if(locals.user) {%>
+                <%if(currentFriends.length > 0 || toUserFriends.length > 0) {%> 
+
+                    <div class="card mb-4" style="width: 18rem;">
+                        <div class="card-body">
+                          <h5 class="card-title">My Friends</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <% for(u of currentFriends){%>
+                                <li class="list-group-item">
+                               
+                                    <%=u.to_user.name%> 
+                              
+                                      <a class="m-2"  href="users/removeFriend?fromID=<%=locals.user.id%>&toID=<%=u.to_user._id%>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-dash-fill" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
+                                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                          </svg>
+                                      </a>
+                                </li>
+                                <% } %>
+                            <% for(u of toUserFriends){%>
+                                <li class="list-group-item">
+                                    <%=u.from_user.name%> 
+                                        <a class=""  href="users/removeFriend?fromID=<%=u.from_user._id%>&toID=<%=locals.user.id%>">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-dash-fill" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
+                                                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                              </svg>
+                                          </a>
+                                </li>
+                                <% } %>
+                        </ul>
+                      </div>
+                <%}%>
+            <%}%>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    Users
+                </h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <% for(u of all_users){%>
+                        <li class="list-group-item">
+                            <a class="text-decoration-none" href="/users/profile/<%= u.id %>">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person m-2" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                                  </svg>
+                                <%= u.name %>
+                            </a>
+                        </li>
+                     <% } %>
+                </ul>
+              </div>
+              
+        
+    </section>
+
+    <%- include('chat_box') -%>
+</div>
+<script src="/js/home_posts.js"></script>
+<script src="/js/home_comments.js"></script>
+<script src="/js/toggle_like.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+<script src = "/js/chat_engine.js"></script>
+
+<script>
+    $('.toggle-like-button').each(function() {
+        let self = this;
+        toggleLike(this);
+    });
+</script>
+
+<!-- socket connection -->
+<% if(locals.user) {%> 
+<script>
+    new ChatEngine('user-chat-box', '<%=locals.user.email%>', '<%=locals.user.name%>', 'hi')
+</script>
+
+<%}%>

@@ -1,0 +1,55 @@
+<!-- <li id = "comment-<%=comment._id%>" class="list-group-item">
+        <p>
+            <% if (locals.user && (locals.user.id == comment.user.id || locals.user.id == post.user.id)){ %>
+            <small>
+                <a class="delete-comment-button" href="/comments/destroy/<%= comment._id %>">X</a>
+            </small>
+            <% } %>
+            <%= comment.content %>
+            <br>
+            <small>
+                <%= comment.user.name %>
+            </small>
+        </p>    
+
+</li> -->
+
+<li id="comment-<%=comment._id%>" class="list-group-item">
+    <div class="card" style="width: 14rem;">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                 <%= comment.content %>
+            </li>
+            <li class="list-group-item">
+                <%if(locals.user) {%>
+                    <!-- <h1><%=comment.likes.length%></h1> -->
+                    <a class="toggle-like-button text-decoration-none" data-likes="<%= comment.likes.length %>" href="/likes/toggle/?id=<%=comment._id%>&type=Comment">
+
+                      <%if(comment.likes.length > 0) {%>
+                        <%= comment.likes.length %>
+                        <%}%>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill mr-2" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                          </svg>
+                    </a>
+                    <%} else {%>
+
+                        <%if(comment.likes.length > 0) {%>
+                        <%= comment.likes.length %> 
+                        <%}%>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill mr-2" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                          </svg>
+                    <%}%>
+
+                    <li class="list-group-item">
+                <!-- Commented By : -->
+                <%= comment.user.name %>
+                </li>
+                    <% if (locals.user && (locals.user.id==comment.user.id || locals.user.id==post.user.id)){ %>
+                        <a class="delete-comment-button card-link btn btn-warning" href="/comments/destroy/<%= comment._id %>">Delete Comment</a>
+                        <% } %>
+            </li>
+        </ul>
+    </div>
+</li>

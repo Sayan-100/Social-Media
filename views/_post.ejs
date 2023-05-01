@@ -1,0 +1,97 @@
+
+<link rel="stylesheet" href="<%= assetPath('css/posts.css') %>">
+<li id="post-<%= post._id %>" class="posts mb-4">
+  <!-- <p> -->
+  <div class="card" style="width: 32rem">
+    <% if(post.avatar) { %> <img class="card-img-top mb-0" src="<%=post.avatar
+    %>"" alt=" post pic" width="200">
+      <br />
+      <%}%>
+        <!-- <div class="card-body">
+                    <h5 class="card-title">
+                        <%= post.content %>
+                    </h5>
+                </div> -->
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item card-title">
+            <%= post.content %>
+          </li>
+          <li class="list-group-item">
+            <%if(locals.user) {%>
+              <!-- <h1>
+                <%=post.likes.length%>
+              </h1> -->
+
+              <a class="toggle-like-button text-decoration-none" data-likes="<%= post.likes.length %>" href="/likes/toggle/?id=<%=post._id%>&type=Post">
+                <%if(post.likes.length > 0 ) {%>
+                  <%= post.likes.length %> 
+                  <%}%>
+               
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill mr-2" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                </svg>
+              </a>
+              <%} else {%>
+                <%if(post.likes.length > 0 ) {%>
+                  <%= post.likes.length %> 
+                  <%}%>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill mb-2" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                </svg>
+                <%}%>
+
+                  <!-- <a href="/likes/toggle/?id=<%=post.id%>&type=Post">Like</a> -->
+                  Created By <%= post.user.name %>
+          </li>
+          <li class="list-group-item">
+            <div class="post-comments">
+              <% if (locals.user){ %>
+                <form id="post-<%=post._id%>-comments-form" action="/comments/create" method="POST">
+                  <div class="mb-2">
+                    <input class="form-control" type="text" name="content" placeholder="Type Here to add comment..."
+                      required />
+                  </div>
+                  <div class="mb-2">
+                    <input class="form-control" type="hidden" name="post" value="<%= post._id %>" />
+                  </div>
+                  <div class="mb-2">
+                    <input class="btn btn-success form-control" type="submit" value="Add Comment" />
+                  </div>
+                </form>
+
+                <% } %>
+
+                  <div id = "posts-comment-list-container" class="post-comments-list">
+                    <ul id="post-comments-<%= post._id %>" class="list-group list-group-flush">
+                      <% for (comment of post.comments){%> <%- include('_comment') -%>
+                          <%} %>
+                    </ul>
+                  </div>
+            </div>
+          </li>
+        </ul>
+
+        <% if (locals.user && locals.user.id==post.user.id){ %>
+          <div class="card-body">
+            <a class="delete-post-button card-link btn btn-warning" href="/posts/destroy/<%= post._id %>">Delete
+              Post</a>
+          </div>
+          <% } %>
+  </div>
+  <!-- <% if (locals.user && locals.user.id==post.user.id){ %>
+            <small>
+                <a class="delete-post-button" href="/posts/destroy/<%= post._id %>">X</a>
+            </small>
+            <% } %>
+
+                <% if(post.avatar) { %>
+                    <img src="<%=post.avatar %>"" alt=" post pic" width="200">
+                    <br>
+                <%}%>
+            <%= post.content %>
+            <br>
+            <small>
+            <%= post.user.name %>
+            </small> -->
+  <!-- </p> -->
+</li>
