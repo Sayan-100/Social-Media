@@ -7,5 +7,10 @@
   "css/posts.css": "css/posts-5ed6950586.css",
   "css/userSignIn.css": "css/userSignIn-5fa991f09d.css",
   "css/userSignUp.css": "css/userSignUp-4661455f73.css",
-  "css/user_profile.css": "css/user_profile-6eda35c664.css"
+  "css/user_profile.css": "css/user_profile-6eda35c664.css",
+  "js/chat_engine.js": "js/chat_engine-8449bd7b04.js",
+  "js/friends.js": "js/friends-cb455a744e.js",
+  "js/home_comments.js": "js/home_comments-7350e79e85.js",
+  "js/home_posts.js": "js/home_posts-38630624f1.js",
+  "js/toggle_like.js": "js/toggle_like-b4e1af0468.js"
 }

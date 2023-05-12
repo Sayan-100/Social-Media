@@ -117,19 +117,28 @@
 
     <%- include('chat_box') -%>
 </div>
-<script src="/js/home_posts.js"></script>
-<script src="/js/home_comments.js"></script>
-<script src="/js/toggle_like.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
-<script src = "/js/chat_engine.js"></script>
 
+<script>
+    console.log('render it from home.ejs --------------------> ')
+</script>
+
+<script src="<%= assetPath('js/home_comments.js') %>"></script>
+<script src="<%= assetPath('js/home_posts.js') %>"></script>
+
+<script src="<%= assetPath('js/toggle_like.js') %>"></script>
 <script>
     $('.toggle-like-button').each(function() {
         let self = this;
         toggleLike(this);
     });
 </script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+<script src = "<%=assetPath('js/chat_engine.js')%>"></script>
+<script src = "<%= assetPath('js/friends.js') %>"> </script>
+
 
 <!-- socket connection -->
 <% if(locals.user) {%> 
