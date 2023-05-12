@@ -9,7 +9,13 @@ class ChatEngine {
     //io from cdn file
     //socket connection ask for a connection and event -> connection
     // this.socket = io.connect("http://localhost:5000");
-    this.socket = io.connect("http://18.208.115.15:5000");
+    this.socket = io.connect("http://18.208.115.15:5000", (socketServer, {
+      cors: {
+        origin: "http://18.208.115.15:8000",
+        methods: ["GET", "POST"],
+        credentials: true,
+      },
+    }));
 
     if (this.userEmail) {
       this.connectionHandler();
