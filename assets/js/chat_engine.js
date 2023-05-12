@@ -17,7 +17,7 @@ class ChatEngine {
   }
 
   connectionHandler() {
-    //ask to join the room
+    //ask to join the room 
     let self = this;
 
     //receives the acknowledgement from backend
